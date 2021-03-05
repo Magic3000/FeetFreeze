@@ -49,33 +49,25 @@ namespace FeetFreeze
             if (isc == null)
                 return;
             if (toggleFeetFreeze)
-                InputStateControllerManager.prop_InputStateControllerManager_0.Method_Public_InputStateController_Type_0(UnhollowerRuntimeLib.Il2CppType.Of<MonoBehaviour1PublicObUnique>());   //UIInputController
+                inputStateControllerManager?.Method_Public_InputStateController_Type_0(UnhollowerRuntimeLib.Il2CppType.Of<MonoBehaviour1PublicObUnique>());   //UIInputController
             else
-                InputStateControllerManager.prop_InputStateControllerManager_0.Method_Public_InputStateController_0();
+                PopInputController();
             SetToggle(ToggleFeetFreeze, toggleFeetFreeze);
         }
 
-        /*private static void PushInputController(InputStateControllerManager isc)
+        private static void PopInputController()
         {
-            if (isc != null)
-                isc.enabled = false;
-            MonoBehaviour1PublicObUnique inputStateController = isc.gameObject.AddComponent<MonoBehaviour1PublicObUnique>();
-            isc.field_Private_List_1_InputStateController_0.Add(inputStateController);
-            inputStateController.Method_Public_Virtual_New_Void_0();                //OnActivate
-        }
-
-        private static InputStateController PopInputController(InputStateControllerManager isc)
-        {
-            InputStateController inputStateController = null;
-            if (isc.field_Private_List_1_InputStateController_0.Count > 1)          //mInputStateControllerStack
+            var isc = inputStateControllerManager;
+            if (isc == null)
+                return;
+            else if (isc.field_Private_List_1_InputStateController_0.Count > 1)          //mInputStateControllerStack
             {
-                inputStateController = PeekInputController(isc);
+                var inputStateController = PeekInputController(isc);
                 isc.field_Private_List_1_InputStateController_0.RemoveAt(isc.field_Private_List_1_InputStateController_0.Count - 1);    //mInputStateControllerStack
                 UnityEngine.Object.Destroy(inputStateController);
                 PeekInputController(isc).enabled = true;
                 PeekInputController(isc).Method_Public_Virtual_New_Void_0();        //OnActivate
             }
-            return inputStateController;
         }
 
         private static InputStateController PeekInputController(InputStateControllerManager isc)
@@ -86,14 +78,20 @@ namespace FeetFreeze
                 result = isc.field_Private_List_1_InputStateController_0[isc.field_Private_List_1_InputStateController_0.Count - 1];    //mInputStateControllerStack
             }
             return result;
-        }*/
+        }
+        internal static InputStateControllerManager inputStateControllerManager
+        {
+            get
+            {
+                return InputStateControllerManager.prop_InputStateControllerManager_0;
+            }
+        }
 
         private static Transform ToggleFeetFreeze;
         private static bool toggleFeetFreeze;
 
         public static void SetToggle(Transform button, bool toggleOn, bool disabled = false)
         {
-            //button.GetComponentInChildren<UiToggleButton>().Method_Public_Void_Boolean_Boolean_2(state); obfuscated
             var uiToggleButton = button.GetComponentInChildren<UiToggleButton>();
             uiToggleButton.field_Public_Boolean_0 = toggleOn;
             var disabledButton = uiToggleButton.field_Public_GameObject_2;          //disabledButton
